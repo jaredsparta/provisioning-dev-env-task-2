@@ -1,2 +1,4 @@
 .vagrant
 *.log
+config-files
+!config-files/mongod-copy.conf

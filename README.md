@@ -20,4 +20,10 @@
 
 - To automate the installation of MongoDB into our VM we can make use of a bash script. This can be found in `environment/db/provision.sh`. Bash scripts have the extension `.sh`
 
+- To automatically make MongoDB listen on `0.0.0.0:27017`, we create a `mongod-copy.conf` file in `config-files` and sync this folder with the VM. Within this copy, we change the `port` and `bindip` values. We then use bash commands in `provision.sh` to replace the `mongod.conf` file in `/etc` to this one. The second line allows one to replace the contents of the file without renaming it.
+```bash
+cd /folder1 
+sudo cp -f mongod-copy.conf /etc/mongod.conf
+```
+
 - To run the VM, all one would need to then do is navigate to the root of this directory (the level that contains the Vagrantfile) and then `vagrant up`.
