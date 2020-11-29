@@ -1,18 +1,19 @@
-# updates the OS first
+#!/bin/bash
 sudo apt-get update
 
-# Imports the public key for MongoDB 4.4
-wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+# receives the files
+wget -qO - https://www.mongodb.org/static/pgp/server-3.2.asc | sudo apt-key add -
 
-# Creates the list file and updates it
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+
 sudo apt-get update
 
-# Install MongoDB
-sudo apt-get install -y mongodb-org
+# installs mongodb version 3.2.20
+sudo apt-get install -y mongodb-org=3.2.20 mongodb-org-server=3.2.20 mongodb-org-shell=3.2.20 mongodb-org-mongos=3.2.20 mongodb-org-tools=3.2.20
 
-cd /folder1
-sudo cp -f mongod-copy.conf /etc/mongod.conf
+# enables the mongodb server to listen on 0.0.0.0
+sudo sed -i 's/bindIp: 127.0.0.1/bindIp: 0.0.0.0/' /etc/mongod.conf
 
+# enables the server and starts it
 sudo systemctl enable mongod
 sudo systemctl start mongod
